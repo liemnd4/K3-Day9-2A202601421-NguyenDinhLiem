@@ -78,7 +78,7 @@ def load_case(order_id: str) -> CaseData:
         order_estimated_delivery_date=_none_if_nan(r["order_estimated_delivery_date"]),
     )
 
-    item_rows = _items_df[_items_df["order_id"] == order_id]
+    item_rows = _items_df[_items_df["order_id"] == order_id].sort_values("order_item_id")
     items = [
         ItemInfo(
             order_id=order_id,
@@ -92,7 +92,7 @@ def load_case(order_id: str) -> CaseData:
         for _, row in item_rows.iterrows()
     ]
 
-    payment_rows = _payments_df[_payments_df["order_id"] == order_id]
+    payment_rows = _payments_df[_payments_df["order_id"] == order_id].sort_values("payment_sequential")
     payments = [
         PaymentInfo(
             order_id=order_id,

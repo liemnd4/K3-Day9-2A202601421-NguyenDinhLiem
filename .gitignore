@@ -22,6 +22,7 @@ env.md
 # IDE
 .vscode/
 .idea/
+.gemini/
 *.swp
 *.swo
 *~
@@ -30,9 +31,12 @@ env.md
 .DS_Store
 Thumbs.db
 
-# Data (never commit large data)
+# Data & Temporary files
 *.db
 *.sqlite3
+*.zip
+submission.txt
+mock_case_data.py
 
 # Logs
 logs/
