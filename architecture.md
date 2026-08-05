@@ -13,8 +13,6 @@ flowchart TD
     F --> G["Output<br/>output/EC_xxx.json"]
 ```
 
-> Dán khối trên vào GitHub — GitHub render mermaid trực tiếp trong file `.md`, không cần ảnh.
-
 ## 2. Vai trò từng agent
 
 | Agent | Phụ trách | Input | Output | Quyền truy cập dữ liệu |
@@ -31,16 +29,16 @@ flowchart TD
 1. **Coordinator** đọc 1 file case từ `input/`, lấy `claimed_order_id`.
 2. **Data layer** tra CSV, trả về `CaseData` — dữ liệu thô, chưa có kết luận gì.
 3. **Order & delivery agent** và **Payment agent** chạy song song trên cùng `CaseData`, mỗi agent chỉ phân tích domain của mình và tự sinh evidence ID theo đúng định dạng (`order:`, `item:`, `payment:`, `seller:`).
-4. **Policy agent** nhận cả 2 bộ evidence, áp bảng quy tắc theo đúng thứ tự ưu tiên (canceled/unavailable → late delivery → split payment → reject), tính refund, chọn action.
-5. **Verifier** kiểm tra: evidence ID đúng regex và tồn tại thật trong CSV, không vượt giới hạn số lượng (≤5 entity/set, ≤10 evidence, ≤3 causes, ≤3 parties, ≤5 actions), `confidence` ∈ [0,1].
+4. **Policy agent** nhận cả 2 bộ evidence, áp bảng quy tắc theo đúng thứ tự ưu tiên (`canceled_order_paid` / `unavailable_order_paid` $\rightarrow$ `late_delivery_seller` / `late_delivery_logistics` $\rightarrow$ `valid_split_payment` $\rightarrow$ `unsupported_late_claim`), tính refund, chọn action.
+5. **Verifier** kiểm tra: evidence ID đúng regex và tồn tại thật trong CSV, không vượt giới hạn số lượng ($\le 5$ entity/set, $\le 10$ evidence, $\le 3$ causes, $\le 3$ parties, $\le 5$ actions), `confidence` $\in [0,1]$.
 6. **Coordinator** ghi kết quả đã verify vào `output/EC_xxx.json`, đồng thời log vào `trace.jsonl`.
 
-Điểm cốt lõi: mỗi agent chỉ thấy đúng phần dữ liệu cần cho domain của mình (Policy agent không tự đọc CSV, Verifier không tự đọc CSV) — buộc hệ thống phải **handoff bằng chứng thật** giữa các agent thay vì gộp hết vào 1 prompt.
+Điểm cốt lõi: Mỗi agent chỉ thấy đúng phần dữ liệu cần cho domain của mình (Policy agent không tự đọc CSV, Verifier không tự đọc CSV) — buộc hệ thống phải handoff bằng chứng thật giữa các agent thay vì gộp hết vào 1 prompt.
 
 ## 4. Model sử dụng
 
-Mỗi agent dùng model ≤10B parameters (khai báo chi tiết trong `metadata.json`), gọi qua Groq API.
+Mỗi agent sử dụng model $\le 10B$ parameters (`llama-3.1-8b-instant`), được khai báo chi tiết trong `metadata.json` và gọi qua Groq API client (`llm_client.py`).
 
 ## 5. Contract dùng chung
 
-Toàn bộ shape dữ liệu giữa các agent (`CaseData`, `DeliveryFindings`, `PaymentFindings`, `PolicyDecision`) được định nghĩa trong `contracts.py` ở root repo, đảm bảo 4 người code song song không bị lệch format.
+Toàn bộ shape dữ liệu giữa các agent (`CaseData`, `DeliveryFindings`, `PaymentFindings`, `PolicyDecision`) được định nghĩa trong `contracts.py` ở root repo, đảm bảo các thành viên phát triển song song mà không bị lệch format.
