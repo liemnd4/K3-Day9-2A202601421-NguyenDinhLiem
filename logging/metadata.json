@@ -1,0 +1,9 @@
+{
+  "model_name": "llama-3.1-8b-instant",
+  "parameter_size": "8B",
+  "max_allowed_parameter_size": "10B",
+  "framework": "Custom Multi-Agent Orchestration / LangChain",
+  "runtime": "Python 3.10+",
+  "provider": "Groq API / Local Inference",
+  "description": "Multi-agent e-commerce dispute resolution pipeline with Coordinator, Data Layer, Order & Delivery Agent, Payment Agent, Policy Agent, and Verifier."
+}
