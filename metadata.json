@@ -1,0 +1,36 @@
+{
+  "team": "K3-Day9-2A202601421-NguyenDinhLiem",
+  "framework": "Python (custom orchestration, không dùng LangGraph/CrewAI)",
+  "runtime": "Python 3.11",
+  "agents": [
+    {
+      "name": "delivery_agent",
+      "owner": "Nguoi 2",
+      "model": "rule-based (không gọi LLM cho quyết định)",
+      "parameters": null,
+      "note": "Có thể bổ sung llama-3.1-8b-instant qua llm_client.py để diễn giải case bằng ngôn ngữ tự nhiên, không dùng để tính toán số liệu"
+    },
+    {
+      "name": "payment_agent",
+      "owner": "Nguoi 3",
+      "model": "rule-based",
+      "parameters": null
+    },
+    {
+      "name": "policy_agent",
+      "owner": "Nguoi 3",
+      "model": "rule-based",
+      "parameters": null
+    },
+    {
+      "name": "verifier",
+      "owner": "Nguoi 4",
+      "model": "rule-based",
+      "parameters": null
+    }
+  ],
+  "llm_provider": "Groq API",
+  "llm_model": "llama-3.1-8b-instant",
+  "llm_model_parameters": "8B",
+  "policy_version": "EC_POLICY_V1"
+}
