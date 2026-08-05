@@ -39,7 +39,7 @@
 ### Vấn đề cần giải quyết
 Task 3 đóng vai trò quyết định chính của hệ thống:
 1. Phân tích tài chính: Kiểm tra việc khớp tiền giữa tổng thanh toán với tổng giá trị hàng và phí vận chuyển (sai số $\le 0.10$ BRL).
-2. Phán quyết chính xác: Nhận bằng chứng từ Delivery Agent và Payment Agent để áp dụng thứ tự ưu tiên tuyệt đối từ Rule 1 &rarr; Rule 6.
+2. Phán quyết chính xác: Nhận bằng chứng từ Delivery Agent và Payment Agent để áp dụng thứ tự ưu tiên tuyệt đối từ Rule 1 đến Rule 6.
 
 ### Cách triển khai
 - **Payment Agent:** Lặp qua `payments` và `items` trong `CaseData` để tính tổng tiền, đối soát cờ `is_split_valid` khi số dòng thanh toán $\ge 2$.
@@ -57,7 +57,7 @@ Task 3 đóng vai trò quyết định chính của hệ thống:
 | --- | --- |
 | Input | `CaseData`, `DeliveryFindings`, `PaymentFindings` |
 | Output | `PolicyDecision` (chứa `primary_issue`, `case_status`, `recommended_refund_brl`, `evidence_ids`, `resolution_actions`) |
-| Module phụ thuộc | `contracts.py`, `delivery_agent.py` |
+| Module phụ thuộc | `contracts.py`, `order_delivery_agent.py` |
 | Module sử dụng output | `verifier.py`, `run_all.py` |
 | Điều kiện lỗi cần xử lý | Đơn hàng không có item row, đơn hàng bị thiếu mốc thời gian |
 
@@ -67,7 +67,7 @@ Task 3 đóng vai trò quyết định chính của hệ thống:
 python3 test_task3.py
 ```
 
-- **Kết quả mong đợi:** Ran 4 tests in 0.002s — OK.
+- **Kết quả mong đợi:** `Ran 4 tests in 0.002s - OK`
 - **Kết quả thực tế:** 100% test cases passed.
 
 ## 5. Một quyết định kỹ thuật quan trọng
@@ -97,8 +97,6 @@ python3 test_task3.py
 5. `VerifierAgent` kiểm tra định dạng regex và trim giới hạn entity trước khi xuất file JSON vào `output/EC_xxx.json` và lưu `trace.jsonl`.
 
 ## 8. Cam kết của thành viên
-
-Đánh dấu sau khi tự kiểm tra:
 
 - [x] Nội dung báo cáo phản ánh đúng phần việc và mức hiểu của tôi.
 - [x] Tôi có thể giải thích luồng end-to-end, không chỉ module mình phụ trách.
