@@ -1,14 +1,11 @@
-"""
-policy_agent.py
-===============
-Policy Agent: Đóng vai trò "Thẩm phán" đưa ra quyết định xử lý khiếu nại (PolicyDecision).
-Thuộc Task 3 (Người 3).
-
-Nhận thông tin từ Delivery Agent và Payment Agent, chiếu theo thứ tự ưu tiên 6 quy tắc
-đã được quy định trong Section 4 của README.
-"""
 
 from typing import List, Optional
+try:
+    from llm_client import call_llm, MODEL_NAME
+except ImportError:
+    MODEL_NAME = "llama-3.1-8b-instant"
+    call_llm = None
+
 from contracts import (
     CaseData,
     DeliveryFindings,
@@ -169,6 +166,16 @@ class PolicyAgent:
             freight_total_brl=round(freight_total_brl, 2),
             payment_total_brl=round(payment_findings.payment_total, 2),
         )
+
+    def explain_decision_with_llm(self, decision: PolicyDecision, message: str = "") -> Optional[str]:
+        """Sử dụng LLM llama-3.1-8b-instant (từ llm_client.py) để diễn giải cho case."""
+        if call_llm is None:
+            return None
+        try:
+            prompt = f"Case {decision.case_id}: Khiếu nại={message}. Xử lý: issue={decision.primary_issue}, refund={decision.recommended_refund_brl} BRL. Diễn giải ngắn gọn:"
+            return call_llm(prompt, model=MODEL_NAME)
+        except Exception:
+            return None
 
 
 def evaluate_policy(

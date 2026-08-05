@@ -1,13 +1,3 @@
-"""
-payment_agent.py
-================
-Payment Agent: Phân tích và đối soát dữ liệu thanh toán của đơn hàng.
-Thuộc Task 3 (Người 3).
-
-Input: CaseData (từ Data Layer)
-Output: PaymentFindings (được chuyển giao cho Policy Agent)
-"""
-
 from contracts import CaseData, PaymentFindings, ev_payment
 
 
