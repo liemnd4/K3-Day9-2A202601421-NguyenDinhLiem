@@ -21,11 +21,12 @@ from contracts import to_output_json
 from coordinator import process_case_file
 
 
-def run_all_cases(input_dir: str = "input", output_dir: str = "output", trace_file: str = os.path.join("logging", "trace.jsonl")):
+def run_all_cases(input_dir: str = "input", output_dir: str = "output", trace_file: str = "trace.jsonl"):
     start_time = time.time()
     
     os.makedirs(output_dir, exist_ok=True)
-    os.makedirs(os.path.dirname(trace_file), exist_ok=True)
+    if os.path.dirname(trace_file):
+        os.makedirs(os.path.dirname(trace_file), exist_ok=True)
 
     # Find all input JSON files
     input_files = sorted(glob.glob(os.path.join(input_dir, "EC_*.json")))
