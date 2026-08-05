@@ -4,7 +4,7 @@
 
 | Thông tin       | Nội dung                          |
 | --------------- | --------------------------------- |
-| Họ và tên       | Nguyễn Văn Hùng                   |
+| Họ và tên       | Nguyễn Văn Hưng                   |
 | MSSV            | 2A202601970                       |
 | Khóa/Lớp        | K3-AIThucChien                    |
 | Vai trò chính   | Integration, Verifier & QA Engineer (Người 4) |
