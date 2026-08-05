@@ -1,7 +1,60 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables
 .env
-.env.*
-.DS_Store
+.env.local
+.env.production
+env.md
+*.pem
+
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (never commit large data)
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Test coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Node (frontend)
+node_modules/
+.next/
+out/
+.nuxt/
+
+# Build
+*.pyc
+*.pyo
+
+# Large Files
+*.pt
+*.onnx
+*.mp4
+*.avi
